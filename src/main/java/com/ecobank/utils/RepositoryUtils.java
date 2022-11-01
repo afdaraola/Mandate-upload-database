@@ -1,8 +1,7 @@
 package com.ecobank.utils;
 
 import com.ecobank.mandate.repository.implementation.MandateRepositoryImplementation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -12,7 +11,7 @@ import java.sql.*;
 import java.util.Arrays;
 
 public class RepositoryUtils {
-    private static final Logger logger = LoggerFactory.getLogger(MandateRepositoryImplementation.class);
+    private static final Logger logger =  Logger.getLogger(RepositoryUtils.class);
     public static Connection getConnection() {
         Context initCtx;
         DataSource ds;
@@ -37,21 +36,21 @@ public class RepositoryUtils {
         return conn;
     }
 
-    public static Connection getDataBaseConnectionFlex() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException, Exception {
-        Connection conn = null;   //10.8.184.141:1521/FCUBSNIGRPT
-        String host = "10.8.184.140";
-       // String host ="localhost";
-        String passwords = "MULEAPPUSER";
-        String Instance = "FCNIGUAT";
-        String usernames = "MULEAPPUSER";
-        Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
-        System.out.println("Connecting to the database..." + host + " : ---- : " + usernames);
-        String connect = ("jdbc:oracle:thin:@" + host + ":1521/" + Instance );
-        System.out.println("----Connect "+ connect);
-        conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":1521/" + Instance , usernames, passwords);
-        System.out.println("Connected to the database " + conn);
-        return conn;
-    }
+//    public static Connection getDataBaseConnectionFlex() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException, Exception {
+//        Connection conn = null;   //10.8.184.141:1521/FCUBSNIGRPT
+//        String host = "10.8.184.140";
+//       // String host ="localhost";
+//        String passwords = "MULEAPPUSER";
+//        String Instance = "FCNIGUAT";
+//        String usernames = "MULEAPPUSER";
+//        Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+//        System.out.println("Connecting to the database..." + host + " : ---- : " + usernames);
+//        String connect = ("jdbc:oracle:thin:@" + host + ":1521/" + Instance );
+//        System.out.println("----Connect "+ connect);
+//        conn = DriverManager.getConnection("jdbc:oracle:thin:@" + host + ":1521/" + Instance , usernames, passwords);
+//        System.out.println("Connected to the database " + conn);
+//        return conn;
+//    }
 
 
 

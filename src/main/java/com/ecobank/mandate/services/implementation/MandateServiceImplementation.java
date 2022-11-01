@@ -8,8 +8,7 @@ import com.ecobank.mandate.repository.implementation.MandateRepositoryImplementa
 import com.ecobank.mandate.services.MandateService;
 import com.ecobank.utils.InterbankBankingProperties;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class MandateServiceImplementation implements MandateService {
 
     @Value("${create-mandate-url}")
     private String createMandateUrl;
-    private static final Logger logger = LoggerFactory.getLogger(MandateServiceImplementation.class);
+    private  final Logger logger =   Logger.getLogger(MandateServiceImplementation.class);
 
     @Autowired
     MandateRepositoryImplementation mandateRepositoryImplementation;
@@ -36,9 +35,9 @@ public class MandateServiceImplementation implements MandateService {
         ResponseDTO<Object> responseDTO = new ResponseDTO<>();
 
 
-      // String sourceCode = "ECOMOBILE";
+        String sourceCode = "ECOMOBILE";
 
-        String sourceCode = InterbankBankingProperties.getMessage("ENGSOURCECODE");
+      //  String sourceCode = InterbankBankingProperties.getMessage("ENGSOURCECODE");
 
         logger.info("Source code "+ sourceCode);
 

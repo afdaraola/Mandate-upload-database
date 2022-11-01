@@ -1,6 +1,6 @@
 package com.ecobank.mandate.services.implementation;
 
-/* @author sa_oladipo created on 1/24/22 */
+/* @author fedaramola created on 1/24/22 */
 
 
 
@@ -11,8 +11,7 @@ import com.ecobank.utils.HttpUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,7 +32,7 @@ public class RestCallServiceImpl implements RestCallService {
 
     private final WebClient webClient;
 
-    private final Logger log = LoggerFactory.getLogger(RestCallServiceImpl.class);
+    private final Logger log = Logger.getLogger(RestCallServiceImpl.class);
 
 
     @Override
@@ -45,10 +44,10 @@ public class RestCallServiceImpl implements RestCallService {
                 .bodyToMono(new ParameterizedTypeReference<T>() {
                 })
                 .doOnError(error->{
-                    log.info("Error occurred while making a GET request to: {}", url);
+                    log.info("Error occurred while making a GET request to: {}"+ url);
                     log.error(error.getMessage(), error);
                 })
-                .doOnSuccess(response-> log.info("GET request to {} was successful", url))
+                .doOnSuccess(response-> log.info("GET request to {} was successful"+ url))
                 .block();
     }
 
@@ -61,10 +60,10 @@ public class RestCallServiceImpl implements RestCallService {
                 .bodyToMono(new ParameterizedTypeReference<T>() {
                 })
                 .doOnError(error->{
-                    log.info("Error occurred while making a GET request to: {}", url);
+                    log.info("Error occurred while making a GET request to: {}"+ url);
                     log.error(error.getMessage(), error);
                 })
-                .doOnSuccess(response-> log.info("GET request to {} was successful", url))
+                .doOnSuccess(response-> log.info("GET request to {} was successful"+ url))
                 .block();
     }
 
@@ -81,10 +80,10 @@ public class RestCallServiceImpl implements RestCallService {
                 .bodyToMono(new ParameterizedTypeReference<T>() {
                 })
                 .doOnError(error->{
-                    log.info("Error occurred while making a POST request to: {}", url);
+                    log.info("Error occurred while making a POST request to: {}"+ url);
                     log.error(error.getMessage(), error);
                 })
-                .doOnSuccess(response-> log.info("POST request to {} was successful", url))
+                .doOnSuccess(response-> log.info("POST request to {} was successful"+ url))
                 .block();
     }
 
@@ -101,10 +100,10 @@ public class RestCallServiceImpl implements RestCallService {
                 .bodyToMono(new ParameterizedTypeReference<T>() {
                 })
                 .doOnError(error->{
-                    log.info("Error occurred while making a PUT request to: {}", url);
+                    log.info("Error occurred while making a PUT request to: {}"+ url);
                     log.error(error.getMessage(), error);
                 })
-                .doOnSuccess(response-> log.info("PUT request to {} was successful", url))
+                .doOnSuccess(response-> log.info("PUT request to {} was successful"+ url))
                 .block();
     }
 
@@ -121,10 +120,10 @@ public class RestCallServiceImpl implements RestCallService {
                 .bodyToMono(new ParameterizedTypeReference<T>() {
                 })
                 .doOnError(error->{
-                    log.info("Error occurred while making a PATCH request to: {}", url);
+                    log.info("Error occurred while making a PATCH request to: {}"+ url);
                     log.error(error.getMessage(), error);
                 })
-                .doOnSuccess(response-> log.info("PATCH request to {} was successful", url))
+                .doOnSuccess(response-> log.info("PATCH request to {} was successful"+ url))
                 .block();
     }
 
@@ -141,10 +140,10 @@ public class RestCallServiceImpl implements RestCallService {
                 .bodyToMono(new ParameterizedTypeReference<T>() {
                 })
                 .doOnError(error->{
-                    log.info("Error occurred while making a DELETE request to: {}", url);
+                    log.info("Error occurred while making a DELETE request to: {}"+ url);
                     log.error(error.getMessage(), error);
                 })
-                .doOnSuccess(response-> log.info("DELETE request to {} was successful with response: {}", url, response))
+                .doOnSuccess(response-> log.info("DELETE request to {} was successful with response: {}"+ url+ response))
                 .block();
     }
 
@@ -152,7 +151,7 @@ public class RestCallServiceImpl implements RestCallService {
 
     public <T> T getResponseConcreteEntity(Object response, Class<T> tClass, String errorMessage){
 
-        log.info("Response: {}", response);
+        log.info("Response: {}  "+ response);
 
         if(response == null)
             throw new GenericException(ResponseCodes.PROCESS_ERROR, errorMessage, null);
@@ -179,7 +178,7 @@ public class RestCallServiceImpl implements RestCallService {
 
         WebClient.RequestBodySpec requestBodySpec;
 
-        log.info("REST call to {} has been initiated", url);
+        log.info("REST call to {} has been initiated"+ url);
         switch (httpMethod){
             case GET:
                 Map<String, Object> params =  null;
@@ -199,7 +198,7 @@ public class RestCallServiceImpl implements RestCallService {
                 }
 
                 MultiValueMap<String, String> finalParams = HttpUtils.getFormData(params);
-                log.info("Params: {}", finalParams);
+                log.info("Params: {}"+ finalParams);
                 requestBodySpec = (!isParamsAvailable)
                         ?
                         webClient.method(HttpMethod.GET).uri(url) :
@@ -223,13 +222,13 @@ public class RestCallServiceImpl implements RestCallService {
                 requestBodySpec = webClient.method(HttpMethod.GET).uri(url);
         }
 
-        log.info("Using {} HTTP verb", httpMethod);
+        log.info("Using {} HTTP verb"+ httpMethod);
 
         if(httpHeaders != null)
             requestBodySpec =  requestBodySpec
                     .headers(httpHeaders);
 
-        log.info("Setup of REST call object completed: {}", requestBodySpec);
+        log.info("Setup of REST call object completed: {}"+ requestBodySpec);
         return requestBodySpec;
     }
 }
